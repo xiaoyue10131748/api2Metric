@@ -1,0 +1,1 @@
+spatch --sp-file rule.cocci  --dir /home/yuexiao/Documents/research/diffcvss/extract_API_description/linux_kernel_mainline/linux
