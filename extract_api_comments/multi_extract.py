@@ -1,9 +1,9 @@
 from multiprocessing import Pool
 import time, os, random
 import sys
-from extract_api_comments import  getDescriptions
+import  getDescriptions
 
-def worker(flag, version):
+def exe(flag, version):
     t_start = time.time()
     print("%sbegin excuting %d" % (version, os.getpid()))
 
@@ -30,16 +30,16 @@ def main():
 
     #path = "../../source_code/Linux/"
 
-    po = Pool(10)
+    #po = Pool(10)
     versions = os.listdir(path)
+    print(versions)
     for i in range(len(versions)):
-        # Pool().apply_async(要调用的目标,(传递给目标的参数元祖,))
-        # 每次循环将会用空闲出来的子进程去调用目标
-        po.apply_async(worker, (flag,versions[i],))
+        print(versions[i])
+        exe(flag,versions[i])
 
     print("----start----")
-    po.close()  # 关闭进程池，关闭后po不再接收新的请求
-    po.join()  # 等待po中所有子进程执行完成，必须放在close语句之后
+    #po.close()  
+    #po.join()  
     print("-----end-----")
 
 

@@ -155,7 +155,7 @@ def list_all_files(rootdir):
 
 def GetDoc(version,raw_data):
     files = list_all_files(version)
-    fw = open(raw_data, 'w')
+    fw = open(raw_data, 'w',errors='surrogateescape')
     count=0
     for _file in tqdm(files):
         filename, file_extension = os.path.splitext(_file)
@@ -170,8 +170,12 @@ def GetDoc(version,raw_data):
 
         if len(DocLog.decode("utf-8") .split("\n")) == 1:
             continue
-        fw.write(DocLog.decode("utf-8") )
-
+        try:
+            fw.write(DocLog.decode("utf-8", 'replace') )
+        except:
+            f_error=open("error.txt","a+")
+            f_error.write(version + " :: " + _file + "\n")
+            f_error.close()
 
     fw.close()
 
