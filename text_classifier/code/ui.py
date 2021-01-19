@@ -162,16 +162,15 @@ def train():
     att_model.save("./self_atten_model/UI_atten_weights")
     print("\n\n\n\n\n\n\n")
 
-def testall():
+def testall(test,tofile):
     #"data/UI/linux_mainline/total_ui_linux.csv"
-    sentence, _, api = load_data("../data/UI/linux_mainline/total_ui_linux.csv", one_hot=False)
-    x_train, y_train, api_train = load_data("../data/UI/linux_mainline/train.csv", sample_ratio=1, one_hot=False)
-    x_test, y_test, api_test = load_data("../data/UI/linux_mainline/total_ui_linux.csv", one_hot=False)
+    sentence, _, api = load_data(test, one_hot=False)
+    x_test, y_test, api_test = load_data(test, one_hot=False)
     x_test_index = x_test.index
 
-    x_train, x_test = data_preprocessing_v3(x_train, x_test, max_len=130)
+    x_train, x_test = data_preprocessing_v4(x_test, max_len=130)
     print("second evaluating:  \n")
-    AV_model = k.models.load_model("./self_atten_model/UI_model_97_77")
+    AV_model = k.models.load_model("../models/UI_model_best")
     rst1 = AV_model.predict(fill_feed_dict_once(x_test, y_test, 8), verbose=1)
     results = np.argmax(rst1, axis=-1)
 
@@ -192,7 +191,7 @@ def testall():
     data["api_list"] = api_list
     data["comment"] = comment
     df = pd.DataFrame(data)
-    df.to_excel("../data//UI/linux_mainline/ui_linux_mainline.xlsx")
+    df.to_excel(tofile)
     print(count)
 
 def test():

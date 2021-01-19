@@ -169,15 +169,14 @@ def test():
     rp(y_test, rst1, sentence, api)
 
 
-def testall():
-    sentence, _, api = load_data("../data/AC/android/total_ac_android.csv", one_hot=False)
-    x_train, y_train, api_train = load_data("../data/AC/linux/train.csv", sample_ratio=1, one_hot=False)
-    x_test, y_test, api_test = load_data("../data/AC/android/total_ac_android.csv", one_hot=False)
+def testall(test,tofile):
+    sentence, _, api = load_data(test, one_hot=False)
+    x_test, y_test, api_test = load_data(test, one_hot=False)
     x_test_index = x_test.index
 
-    x_train, x_test = data_preprocessing_v3(x_train, x_test, max_len=130)
+    x_train, x_test = data_preprocessing_v4(x_test, max_len=130)
     print("second evaluating:  \n")
-    AV_model = k.models.load_model("./matix_model/AC_model_best")
+    AV_model = k.models.load_model("../models/AC_model_best")
     rst1 = AV_model.predict(fill_feed_dict_once(x_test, y_test, 8), verbose=1)
     results = np.argmax(rst1, axis=-1)
 
@@ -198,7 +197,7 @@ def testall():
     data["api_list"] = api_list
     data["comment"] = comment
     df = pd.DataFrame(data)
-    df.to_excel("../data/AC/android/ac_android_4.9.xlsx")
+    df.to_excel(tofile)
     print(count)
 
 if __name__ == '__main__':

@@ -176,19 +176,18 @@ def test():
 
 
     print("second evaluating:  \n")
-    AV_model = k.models.load_model("./matix_model/AV_model_best")
+    AV_model = k.models.load_model("../models/AV_model_best")
     rst1 = AV_model.predict(fill_feed_dict_once(x_test, y_test, 1), verbose=1)
     rp(y_test, rst1, sentence, api)
 
-def testall():
-    sentence, _, api = load_data("../data/AV/android/total_av_android.csv", one_hot=False)
-    x_train, y_train, api_train = load_data("../data/AV/linux/train.csv", sample_ratio=1, one_hot=False)
-    x_test, y_test, api_test = load_data("../data/AV/android/total_av_android.csv", one_hot=False)
+def testall(test,tofile):
+    sentence, _, api = load_data(test, one_hot=False)
+    x_test, y_test, api_test = load_data(test, one_hot=False)
     x_test_index = x_test.index
 
-    x_train, x_test = data_preprocessing_v3(x_train, x_test, max_len=150)
+    x_test = data_preprocessing_v4(x_test, max_len=150)
     print("second evaluating:  \n")
-    AV_model = k.models.load_model("./matix_model/AV_model_best")
+    AV_model = k.models.load_model("../models/AV_model_best")
     rst1 = AV_model.predict(fill_feed_dict_once(x_test, y_test, 8), verbose=1)
     results = np.argmax(rst1, axis=-1)
 
@@ -227,7 +226,7 @@ def testall():
     data["comment"] = comment
     data["label_list"] = label_list
     df = pd.DataFrame(data)
-    df.to_excel("../data/AV/android/av_android_4.9.xlsx")
+    df.to_excel(tofile)
     print(count)
 
 if __name__ == '__main__':
