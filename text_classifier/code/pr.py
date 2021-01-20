@@ -174,7 +174,7 @@ def testall(test,tofile):
     x_test, y_test, api_test = load_data(test, one_hot=False)
     x_test_index = x_test.index
 
-    x_train, x_test = data_preprocessing_v4(x_test, max_len=130)
+    x_test = data_preprocessing_v4(x_test, max_len=130)
     print("second evaluating:  \n")
     AV_model = k.models.load_model("../models/PR_model_best")
     rst1 = AV_model.predict(fill_feed_dict_once(x_test, y_test, 8), verbose=1)

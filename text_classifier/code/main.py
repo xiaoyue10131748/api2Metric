@@ -51,11 +51,14 @@ def process_one_version(regex_func,script_func,total_file_path):
 
 
 if __name__ == '__main__':
-    
-    regex_func="/Users/huthvincent/Documents/research/diffCVSS/pulish/data/Android/android12-5.10/regex_func.xlsx"
-    script_func="/Users/huthvincent/Documents/research/diffCVSS/pulish/data/Android/android12-5.10/scripts_func.xlsx"
-    total_file_path="/Users/huthvincent/Documents/research/diffCVSS/pulish/API/Android/android12-5.4/"
-    process_one_version(regex_func, script_func, total_file_path)
+    main_path="/Users/huthvincent/Documents/research/diffCVSS/pulish/data/Android/"
+    api_main_path = "/Users/huthvincent/Documents/research/diffCVSS/pulish/API/Android/"
+    versions = os.listdir(main_path)
+    for version in versions:
+        regex_func=main_path + version+ "/regex_func.xlsx"
+        script_func=main_path + version+ "/scripts_func.xlsx"
+        total_file_path=api_main_path + version + "/"
+        process_one_version(regex_func, script_func, total_file_path)
 
 
 
