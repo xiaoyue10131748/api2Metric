@@ -1,9 +1,14 @@
 from tensorflow.python.ops.rnn import bidirectional_dynamic_rnn as bi_rnn
-from tools.prepare_data import *
-from tools.model_helper import *
+#from tools.prepare_data import *
+#from tools.model_helper import *
 import tensorflow.keras as k
 import pickle
 import os
+import sys
+sys.path.append("../tools/")
+from prepare_data import *
+from model_helper import *
+
 class ABLSTM(object):
     def __init__(self, config):
         self.max_len = config["max_len"]

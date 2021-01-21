@@ -6,7 +6,7 @@ import csv
 import xlrd
 import pickle
 import ast
-from text_classifier.code.TextPreprocessing import PuritySegmens
+from TextPreprocessing import PuritySegmens
 
 f = open('../data/file_dir_map', 'rb')
 file_dir_map=pickle.load(f)
@@ -48,7 +48,7 @@ def batch_process_pr(api_list,sheet_regex,sheet_script):
     comment_list=[]
     i=0
     for api in api_list:
-        print(i)
+        #print(i)
         i+=1
         comm = get_comments_based_on_API_pr(str(api).strip(),sheet_regex,sheet_script)
         comment_list.append(str(comm))
@@ -72,7 +72,7 @@ def batch_process_ui(api_list,script_sheet,regex_sheet):
             comment_list.append(str(comm))
         except:
             comment_list.append("")
-            print(comments)
+            #print(comments)
     return comment_list
 
 
@@ -81,11 +81,11 @@ def batch_process_av(api_list,sheet_script,sheet_regex):
     comment_list=[]
     i=0
     for api in api_list:
-        print(i)
+        #print(i)
         i+=1
         if i ==72:
             print(i)
-        print(api)
+        #print(api)
         comm = PuritySegmens(get_comments_based_on_API_av(str(api).strip(),sheet_script,sheet_regex))
         comment_list.append(str(comm))
 
@@ -223,8 +223,8 @@ def get_comments_based_on_API_ui(func,script_sheet,regex_sheet):
 
 
 def getAll_AC(regex_func, script_func,total_file):
-    sheet_script = pd.read_excel(regex_func)
-    sheet_regex = pd.read_excel(script_func)
+    sheet_script = pd.read_excel(script_func)
+    sheet_regex = pd.read_excel(regex_func)
     func_1 = sheet_regex["regx_func"].tolist()
     X_1 = batch_process_ui(func_1,sheet_script,sheet_regex)
     tag_1 = [0] * len(func_1)
@@ -237,41 +237,48 @@ def getAll_AC(regex_func, script_func,total_file):
     with open(total_file, "w") as f:
         writer = csv.writer(f)
         for row in x1_rows:
-            writer.writerow(row)
-
+            try:
+                writer.writerow(row)
+            except:
+                pass
     x2_rows = zip(tag_2, func_2, X_2)
     with open(total_file, "a+") as f:
         writer = csv.writer(f)
         for row in x2_rows:
-            writer.writerow(row)
-
-
+            try:
+                writer.writerow(row)
+            except:
+                pass
 
 
 
 def getAll_PR(regex_func, script_func,total_file):
-    sheet_script = pd.read_excel(regex_func)
-    sheet_regex = pd.read_excel(script_func)
+    sheet_script = pd.read_excel(script_func)
+    sheet_regex = pd.read_excel(regex_func)
     func_1 = sheet_regex["regx_func"].tolist()
-    X_1 = batch_process_pr(func_1,sheet_script,sheet_regex)
+    X_1 = batch_process_pr(func_1,sheet_regex,sheet_script)
     tag_1 = [0] * len(func_1)
 
     func_2 = sheet_script["func_list"].tolist()
-    X_2 = batch_process_pr(func_2,sheet_script,sheet_regex)
+    X_2 = batch_process_pr(func_2,sheet_regex,sheet_script)
     tag_2 = [0] * len(func_2)
 
     x1_rows = zip(tag_1, func_1, X_1)
     with open(total_file, "w") as f:
         writer = csv.writer(f)
         for row in x1_rows:
-            writer.writerow(row)
-
+            try:
+                writer.writerow(row)
+            except:
+                pass
     x2_rows = zip(tag_2, func_2, X_2)
     with open(total_file, "a+") as f:
         writer = csv.writer(f)
         for row in x2_rows:
-            writer.writerow(row)
-
+            try:
+                writer.writerow(row)
+            except:
+                pass
 
 
 
@@ -293,19 +300,25 @@ def getAll_AV(regex_func, script_func,total_file):
     with open(total_file, "w") as f:
         writer = csv.writer(f)
         for row in x1_rows:
-            writer.writerow(row)
-
+            try:
+                writer.writerow(row)
+            except:
+                pass
     x2_rows = zip(tag_2, func_2, X_2)
     with open(total_file, "a+") as f:
         writer = csv.writer(f)
         for row in x2_rows:
-            writer.writerow(row)
+            try:
+                writer.writerow(row)
+            except:
+                pass
+
 
 
 
 def getAll_UI(regex_func, script_func,total_file):
-    sheet_script = pd.read_excel(regex_func)
-    sheet_regex = pd.read_excel(script_func)
+    sheet_script = pd.read_excel(script_func)
+    sheet_regex = pd.read_excel(regex_func)
     func_1 = sheet_regex["regx_func"].tolist()
     X_1 = batch_process_ui(func_1,sheet_script,sheet_regex)
     tag_1 = [0] * len(func_1)
@@ -318,14 +331,19 @@ def getAll_UI(regex_func, script_func,total_file):
     with open(total_file, "w") as f:
         writer = csv.writer(f)
         for row in x1_rows:
-            writer.writerow(row)
+            try:
+                writer.writerow(row)
+            except:
+                pass
 
     x2_rows = zip(tag_2, func_2, X_2)
     with open(total_file, "a+") as f:
         writer = csv.writer(f)
         for row in x2_rows:
-            writer.writerow(row)
-
+            try:
+                writer.writerow(row)
+            except:
+                pass
 
 
 if __name__ == '__main__':

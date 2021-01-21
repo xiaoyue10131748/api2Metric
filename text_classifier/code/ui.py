@@ -1,22 +1,26 @@
 from tensorflow.python.ops.rnn import bidirectional_dynamic_rnn as bi_rnn
-from tools.prepare_data import *
-from tools.model_helper import *
+#from tools.prepare_data import *
+#from tools.model_helper import *
 import tensorflow.keras as k
 from tensorflow.python.ops.rnn import bidirectional_dynamic_rnn as bi_rnn
-from tools.prepare_data import *
-from tools.model_helper import *
+#from tools.prepare_data import *
+#from tools.model_helper import *
 import tensorflow.keras as k
 import os
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from sklearn.model_selection import train_test_split
-
+import sys
 import unicodedata
 import re
 import numpy as np
 import os
 import io
 import time
+sys.path.append("../tools/")
+from prepare_data import *
+from model_helper import *
+
 
 class ABLSTM(object):
     def __init__(self, config):

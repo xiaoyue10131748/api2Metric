@@ -3,7 +3,9 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.utils import shuffle
-from text_classifier.code.w2v import get_w2v
+import sys
+sys.path.append("../code/w2v")
+from w2v import get_w2v
 from gensim.models import FastText
 
 names = ["class", "title", "content"]
